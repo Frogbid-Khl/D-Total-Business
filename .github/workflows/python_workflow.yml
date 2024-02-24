@@ -25,3 +25,9 @@ jobs:
         
     - name: Run Python Script
       run: python main.py  # Replace 'main.py' with the name of your Python script
+      
+    - name: Upload Business Data
+      uses: actions/upload-artifact@v2
+      with:
+        name: business-data
+        path: output/business.xlsx  # Adjust the path to the generated Excel file
