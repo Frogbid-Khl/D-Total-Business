@@ -1,0 +1,27 @@
+name: Python Script Execution
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to your default branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu as the runner
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2  # Checks out your repository so your workflow can access it
+
+    - name: Set up Python
+      uses: actions/setup-python@v2  # Sets up Python on the runner
+      with:
+        python-version: 3.x  # Change this to your desired Python version
+        
+    - name: Install Dependencies
+      run: |
+        pip install seleniumbase pandas  # Install required Python packages
+        # You might need to install other dependencies if your script requires them
+        
+    - name: Run Python Script
+      run: python your_script.py  # Replace 'your_script.py' with the name of your Python script
