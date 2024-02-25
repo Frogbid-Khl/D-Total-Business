@@ -7,7 +7,7 @@ Abstracters
 Access Control Systems
 Accessible Web Design
 Accessories
-Accessory Dwelling Unit (ADU) Builder
+Accessory Dwelling Unit ADU Builder
 Accident Insurance
 Accident Reconstruction
 Accordion
@@ -153,7 +153,7 @@ Ammonia
 Ammunition
 Ammunition Reloading
 Ammunition Supplies
-Ammunition & Weapons
+Ammunition Weapons
 Amplifier
 Amusement Devices
 Amusement Park Equipment
@@ -178,8 +178,8 @@ Anode
 Anodizing
 Answering Service
 Antenna
-Anti-Fogging Compounds
-Anti-Freeze
+AntiFogging Compounds
+AntiFreeze
 Antique Appraisal
 Antique Auto Parts
 Antique Dealers
@@ -945,31 +945,31 @@ Change Machine
 Changing Tires
 Charcoal
 Charity
-Charity - Advertising for Publications
-Charity - Animal Protection
-Charity - Arts & Culture
-Charity - Blind & Visually Impaired
-Charity - Cancer
-Charity - Children & Youth
-Charity - Child Sponsorship
-Charity - Civil Rights
-Charity - Community Development & Civic Organizations
-Charity - Education & Literacy
-Charity - Elderly
-Charity - Environment
-Charity - Food Bank
+Advertising for Publications
+Charity-Animal Protection
+Charity-Arts Culture
+Charity-Blind Visually Impaired
+Charity-Cancer
+Charity-Children Youth
+Charity-Child Sponsorship
+Charity-Civil Rights
+Charity-Community Development Civic Organizations
+Charity-Education Literacy
+Charity-Elderly
+Charity-Environment
+Charity-Food Bank
 Charity Foundations
-Charity - Health
-Charity - Human Services (i.e. assistance to individuals & families)
-Charity - Indigenous Services
-Charity - Law & Public Interest
-Charity - Local
-Charity - National
-Charity - Other Charitable Organizations
-Charity - Police & Firefighter Organizations
-Charity - Relief & Development
-Charity - Religious
-Charity - Veterans & Military
+Charity-Health
+Charity-Human Services
+Charity-Indigenous Services
+Charity-Law Public Interest
+Charity-Local
+Charity-National
+Charity-Other Charitable Organizations
+Charity-Police Firefighter Organizations
+Charity-Relief Development
+Charity-Religious
+Charity-Veterans Military
 Charter Boat
 Charter Bus
 Charter Services
@@ -1003,7 +1003,7 @@ Children and Infants
 Children Dentist
 Children's Books
 Childrens' Furniture
-Childrens & Infants Wear - Retail
+Childrens Infants Wear-Retail
 Childrens Parties
 Childrens Play Programs Instruction
 Child Safety
@@ -2424,7 +2424,7 @@ Garden Hand Tools
 Gardening
 Garment Rack
 Garment Restoration
-Garments - Printing & Lettering
+Garments-Printing Lettering
 Gas Appliance Repair
 Gas Boosters
 Gas Burner
@@ -4780,7 +4780,7 @@ Renewable Energy
 Rental Furniture
 Rental Listings
 Rentals by Owner
-Rental Service Stores & Yards
+Rental Service Stores Yards
 Renters Insurance
 Rent to Own
 Rent to Own Furniture
@@ -5610,7 +5610,7 @@ Teletypewriters Message Service
 Teletypewriters Supplies
 Television Mounting
 Television Program Producers
-Television & Radio Parts - Wholesale and Manufacturers
+Television Radio Parts-Wholesale and Manufacturers
 Temperature Measuring Materials
 Tempered Glass
 Tenant Screening
@@ -5816,7 +5816,7 @@ Tree Service
 Tree Service Equipment
 Tree Transplanting Service
 Trenching Contractors
-Trike Conversions, Sales & Service
+Trike Conversions, Sales Service
 Trophies
 Tropical Fish
 Truck Accessories
