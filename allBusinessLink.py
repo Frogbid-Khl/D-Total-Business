@@ -139,7 +139,7 @@ data_dict = {
 df = pd.DataFrame(data_dict)
 
 # Save the DataFrame to an Excel file
-excel_file = 'accessories.xlsx'
+excel_file = 'business/ny_accessories.xlsx'
 df.to_excel(excel_file, index=False)
 
 print("Data saved to", excel_file)
