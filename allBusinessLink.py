@@ -12,7 +12,8 @@ start_time = time.time()
 # Initialize the headless browser
 driver = Driver(uc=True, headless=True)
 
-driver.get("https://www.bbb.org/us/ny/new-york/category/accessories")
+driver.get("https://www.bbb.org/us/ny/new-york/category/computer-software")
+excel_file = 'business/ny_computer-software.xlsx'
 
 try:
     total_element = WebDriverWait(driver, 10).until(
@@ -71,8 +72,9 @@ websites = []
 numbers = []
 business_opens = []
 empty='empty'
-
+each_row=1
 for unique_url in unique_urls_set:
+    step_start_time = time.time()
     driver.get(unique_url)
     try:
         # Find the element with the first XPath
@@ -82,21 +84,59 @@ for unique_url in unique_urls_set:
         business_name = element1.text
         business_names.append(business_name)
     except Exception as e:
-        print("Business Name Empty")
-        business_names.append(empty)
+        try:
+            # Find the element with the first XPath
+            element1 = WebDriverWait(driver, 10).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, '//*[@id="content"]/div[1]/div/header/div/div/h1/span[3]'))
+            )
+            business_name = element1.text
+            business_names.append(business_name)
+        except Exception as e:
+            print("Business Name Empty")
+            business_names.append(empty)
 
+
+    id=1
     try:
         # Find the element with the second XPath
         element2 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[2]/div[1]/div/div[1]/div/address')
         address = element2.text
         addresses.append(address)
+        id=2
     except Exception as e:
-        print("Address Not Found")
-        addresses.append(empty)
+        date=2
+        try:
+            # Find the element with the second XPath
+            element2 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[3]/div[1]/div/div[1]/div/address')
+            address = element2.text
+            addresses.append(address)
+            id = 3
+        except Exception as e:
+            try:
+                # Find the element with the second XPath
+                element2 = driver.find_element(By.XPATH,
+                                               '//*[@id="content"]/div[2]/div[4]/div[1]/div/div[1]/div/address')
+                address = element2.text
+                addresses.append(address)
+                id = 4
+            except Exception as e:
+                try:
+                    # Find the element with the second XPath
+                    element2 = driver.find_element(By.XPATH,
+                                                   '//*[@id="content"]/div[2]/div[5]/div[1]/div/div[1]/div/address')
+                    address = element2.text
+                    addresses.append(address)
+                    id = 5
+                except Exception as e:
+                    print("Address Not Found")
+                    addresses.append(empty)
+
+
 
     try:
         # Find the element with the third XPath
-        element3 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[2]/div[1]/div/div[2]/a')
+        element3 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div['+str(id)+']/div[1]/div/div[2]/a')
         website = element3.get_attribute('href')
         websites.append(website)
     except Exception as e:
@@ -105,7 +145,7 @@ for unique_url in unique_urls_set:
 
     try:
         # Find the element with the fourth XPath
-        element4 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[2]/div[1]/div/div[3]/a')
+        element4 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div['+str(id)+']/div[1]/div/div[3]/a')
         number = element4.get_attribute('href')
         numbers.append(number)
     except Exception as e:
@@ -118,12 +158,38 @@ for unique_url in unique_urls_set:
         business_open = element5.text
         business_opens.append(business_open)
     except Exception as e:
-        print("Open Date Not Found")
-        business_opens.append(empty)
+        try:
+            # Find the element with the fifth XPath
+            element5 = driver.find_element(By.XPATH,
+                                           '//*[@id="content"]/div[3]/div/div[1]/div[1]/div[2]/div[1]/dl/div[2]/dd')
+            business_open = element5.text
+            business_opens.append(business_open)
+        except Exception as e:
+            print("Open Date Not Found")
+            business_opens.append(empty)
 
     business_url.append(unique_url)
+    step_time = time.time() - step_start_time
+    total_time = time.time() - start_time
+    # Convert seconds to days, hours, minutes, and seconds
+    total_days, remainder = divmod(total_time,
+                                   86400)  # 60 seconds * 60 minutes * 24 hours = 86400 seconds
+    total_hours, remainder = divmod(remainder, 3600)  # 60 minutes * 60 seconds = 3600 seconds
+    total_minutes, total_seconds = divmod(remainder, 60)
 
-    print(unique_url)
+    # Construct the concise form of the execution time
+    execution_time = ""
+    if total_days >= 1:
+        execution_time += f"{int(total_days)}d "
+    if total_hours >= 1:
+        execution_time += f"{int(total_hours)}h "
+    if total_minutes >= 1:
+        execution_time += f"{int(total_minutes)}m "
+
+    execution_time += f"{int(total_seconds)}s"
+
+    print(f"Row: {each_row} -> URL: {unique_url}, BN: {business_name}, Address: {address}, Website: {website}, Number: {number}, Business Open: {business_open}, STE: {step_time:.1f}s, TET: {execution_time}")
+    each_row+=1
 
 # Create a dictionary from the lists
 data_dict = {
@@ -139,7 +205,6 @@ data_dict = {
 df = pd.DataFrame(data_dict)
 
 # Save the DataFrame to an Excel file
-excel_file = 'business/ny_accessories.xlsx'
 df.to_excel(excel_file, index=False)
 
 print("Data saved to", excel_file)
