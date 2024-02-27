@@ -73,6 +73,9 @@ numbers = []
 business_opens = []
 empty='empty'
 each_row=1
+
+data_xl = []
+
 for unique_url in unique_urls_set:
     step_start_time = time.time()
     driver.get(unique_url)
@@ -191,24 +194,20 @@ for unique_url in unique_urls_set:
 
     execution_time += f"{int(total_seconds)}s"
 
+    data_xl.append({
+        'Business URL': business_url,
+        'Business Name': business_names,
+        'Address': addresses,
+        'Website': websites,
+        'Number': numbers,
+        'Business Open': business_opens
+    })
+    df = pd.DataFrame(data_xl)
+    df.to_excel(excel_file, index=False)
+
     print(f"\n\nRow: {each_row} -> URL: {unique_url}, BN: {business_name}, Address: {address}, Website: {website}, Number: {number}, Business Open: {business_open}, STE: {step_time:.1f}s, TET: {execution_time}")
     each_row+=1
 
-# Create a dictionary from the lists
-data_dict = {
-    'Business URL': business_url,
-    'Business Name': business_names,
-    'Address': addresses,
-    'Website': websites,
-    'Number': numbers,
-    'Business Open': business_opens
-}
-
-# Create a DataFrame from the dictionary
-df = pd.DataFrame(data_dict)
-
-# Save the DataFrame to an Excel file
-df.to_excel(excel_file, index=False)
 
 print("Data saved to", excel_file)
 
