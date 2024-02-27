@@ -93,7 +93,7 @@ for unique_url in unique_urls_set:
             business_name = element1.text
             business_names.append(business_name)
         except Exception as e:
-            print("Business Name Empty")
+            business_name=empty
             business_names.append(empty)
 
 
@@ -131,6 +131,7 @@ for unique_url in unique_urls_set:
                 except Exception as e:
                     print("Address Not Found")
                     addresses.append(empty)
+                    address=empty
 
 
 
@@ -142,6 +143,7 @@ for unique_url in unique_urls_set:
     except Exception as e:
         print("Website Not Found")
         websites.append(empty)
+        websites = empty
 
     try:
         # Find the element with the fourth XPath
@@ -151,6 +153,7 @@ for unique_url in unique_urls_set:
     except Exception as e:
         print("Number Not Found")
         numbers.append(empty)
+        numbers = empty
 
     try:
         # Find the element with the fifth XPath
@@ -165,7 +168,7 @@ for unique_url in unique_urls_set:
             business_open = element5.text
             business_opens.append(business_open)
         except Exception as e:
-            print("Open Date Not Found")
+            business_opens = empty
             business_opens.append(empty)
 
     business_url.append(unique_url)
@@ -188,7 +191,7 @@ for unique_url in unique_urls_set:
 
     execution_time += f"{int(total_seconds)}s"
 
-    print(f"Row: {each_row} -> URL: {unique_url}, BN: {business_name}, Address: {address}, Website: {website}, Number: {number}, Business Open: {business_open}, STE: {step_time:.1f}s, TET: {execution_time}")
+    print(f"\n\nRow: {each_row} -> URL: {unique_url}, BN: {business_name}, Address: {address}, Website: {website}, Number: {number}, Business Open: {business_open}, STE: {step_time:.1f}s, TET: {execution_time}")
     each_row+=1
 
 # Create a dictionary from the lists
