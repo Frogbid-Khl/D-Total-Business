@@ -6,14 +6,30 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
+import re
+
+
+def is_phone_number(text):
+    # Define a regular expression pattern to match sequences of 8 or more digits
+    pattern = r'\d'
+
+    # Count the number of digit occurrences in the text
+    digit_count = len(re.findall(pattern, text))
+
+    # If there are 8 or more digits, consider it a phone number
+    if digit_count >= 8:
+        return True
+    else:
+        return False
 
 
 start_time = time.time()
 # Initialize the headless browser
 driver = Driver(uc=True, headless=True)
 
-driver.get("https://www.bbb.org/us/ny/new-york/category/computer-software")
-excel_file = 'business/ny_computer-software.xlsx'
+driver.get("https://www.bbb.org/us/ny/new-york/category/fitness-center")
+excel_file = 'business/ny_fitness-center.xlsx'
+unique_urlfile_name = 'business/ny_fitness-center.txt'
 
 try:
     total_element = WebDriverWait(driver, 10).until(
@@ -71,10 +87,15 @@ addresses = []
 websites = []
 numbers = []
 business_opens = []
-empty='empty'
-each_row=1
+empty = 'empty'
+each_row = 1
 
 data_xl = []
+
+# Open the file in write mode
+with open(unique_urlfile_name, 'w') as file:
+    for unique_url in unique_urls_set:
+        file.write(str(unique_url) + '\n')
 
 for unique_url in unique_urls_set:
     step_start_time = time.time()
@@ -96,19 +117,18 @@ for unique_url in unique_urls_set:
             business_name = element1.text
             business_names.append(business_name)
         except Exception as e:
-            business_name=empty
+            business_name = empty
             business_names.append(empty)
 
-
-    id=1
+    id = 1
     try:
         # Find the element with the second XPath
         element2 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[2]/div[1]/div/div[1]/div/address')
         address = element2.text
         addresses.append(address)
-        id=2
+        id = 2
     except Exception as e:
-        date=2
+        date = 2
         try:
             # Find the element with the second XPath
             element2 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[3]/div[1]/div/div[1]/div/address')
@@ -134,45 +154,54 @@ for unique_url in unique_urls_set:
                 except Exception as e:
                     print("Address Not Found")
                     addresses.append(empty)
-                    address=empty
+                    address = empty
 
-
-
+    found_number = 0
     try:
         # Find the element with the third XPath
-        element3 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div['+str(id)+']/div[1]/div/div[2]/a')
+        element3 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div[' + str(id) + ']/div[1]/div/div[2]/a')
         website = element3.get_attribute('href')
-        websites.append(website)
+        if is_phone_number(website):
+            number = website
+            numbers.append(number)
+            website = empty
+            found_number = 1
+            websites.append(website)
+        else:
+            websites.append(empty)
     except Exception as e:
-        print("Website Not Found")
         websites.append(empty)
-        websites = empty
+        website = empty
+
+    if found_number == 0:
+        try:
+            element4 = driver.find_element(By.XPATH,
+                                           '//*[@id="content"]/div[2]/div[' + str(id) + ']/div[1]/div/div[3]/a')
+            number = element4.get_attribute('href')
+            numbers.append(number)
+        except Exception as e:
+            number = empty
+            numbers.append(empty)
 
     try:
-        # Find the element with the fourth XPath
-        element4 = driver.find_element(By.XPATH, '//*[@id="content"]/div[2]/div['+str(id)+']/div[1]/div/div[3]/a')
-        number = element4.get_attribute('href')
-        numbers.append(number)
-    except Exception as e:
-        print("Number Not Found")
-        numbers.append(empty)
-        numbers = empty
-
-    try:
-        # Find the element with the fifth XPath
         element5 = driver.find_element(By.XPATH, '//*[@id="content"]/div[3]/div/div[1]/div[1]/div/div[1]/dl/div[2]/dd')
         business_open = element5.text
         business_opens.append(business_open)
     except Exception as e:
         try:
-            # Find the element with the fifth XPath
             element5 = driver.find_element(By.XPATH,
                                            '//*[@id="content"]/div[3]/div/div[1]/div[1]/div[2]/div[1]/dl/div[2]/dd')
             business_open = element5.text
             business_opens.append(business_open)
         except Exception as e:
-            business_opens = empty
-            business_opens.append(empty)
+            try:
+                element5 = driver.find_element(By.XPATH,
+                                               '//*[@id="content"]/div[3]/div/div[1]/div[1]/div[1]/div[1]/dl/div[3]/dd')
+                business_open = element5.text
+                business_opens.append(business_open)
+            except Exception as e:
+                business_open = empty
+                business_opens.append(empty)
 
     business_url.append(unique_url)
     step_time = time.time() - step_start_time
@@ -195,21 +224,20 @@ for unique_url in unique_urls_set:
     execution_time += f"{int(total_seconds)}s"
 
     data_xl.append({
-        'Business URL': business_url,
-        'Business Name': business_names,
-        'Address': addresses,
-        'Website': websites,
-        'Number': numbers,
-        'Business Open': business_opens
+        'Business URL': unique_url,
+        'Business Name': business_name,
+        'Address': address,
+        'Website': website,
+        'Number': number,
+        'Business Open': business_open
     })
     df = pd.DataFrame(data_xl)
     df.to_excel(excel_file, index=False)
 
-    print(f"\n\nRow: {each_row} -> URL: {unique_url}, BN: {business_name}, Address: {address}, Website: {website}, Number: {number}, Business Open: {business_open}, STE: {step_time:.1f}s, TET: {execution_time}")
-    each_row+=1
-
+    print(
+        f"\n\nRow: {each_row} -> URL: {unique_url}, BN: {business_name}, Address: {address}, Website: {website}, Number: {number}, Business Open: {business_open}, STE: {step_time:.1f}s, TET: {execution_time}")
+    each_row += 1
 
 print("Data saved to", excel_file)
 
 driver.quit()
-
