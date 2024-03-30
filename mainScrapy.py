@@ -23,11 +23,11 @@ class BBBSpider(scrapy.Spider):
             country, state, business, state_name = row['Country'], row['State'], row['Business'], row['State Name']
             for category_url in category_urls:
                 url = f"https://www.bbb.org/{country}/{business}/category/{category_url}"
-                yield scrapy.Request(url, headers=headers, callback=self.parse, meta={'state': state_name, 'url': url})
+                yield scrapy.Request(url, headers=headers, callback=self.parse, meta={'state': state_name, 'url.txt': url})
 
     def parse(self, response):
         state = response.meta['state']
-        url = response.meta['url']
+        url = response.meta['url.txt']
         total = response.css('div.business-search-header h1 strong::text').get(default='Not Load')
 
         yield {'State': state, 'URL': url, 'Total': total}

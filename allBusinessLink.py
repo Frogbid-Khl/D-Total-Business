@@ -27,9 +27,15 @@ start_time = time.time()
 # Initialize the headless browser
 driver = Driver(uc=True, headless=True)
 
-driver.get("https://www.bbb.org/us/ny/new-york/category/fitness-center")
-excel_file = 'business/ny_fitness-center.xlsx'
-unique_urlfile_name = 'business/ny_fitness-center.txt'
+url = "https://www.bbb.org/us/ny/new-york/category/spa"
+
+
+last_part = url.split("/")[-1]
+state = url.split("/")[4]
+
+driver.get(url)
+excel_file = 'canada/7.ontario/toronto/'+state+'_'+last_part+'.xlsx'
+unique_urlfile_name = 'canada/7.ontario/toronto/'+state+'_'+last_part+'.txt'
 
 try:
     total_element = WebDriverWait(driver, 10).until(
