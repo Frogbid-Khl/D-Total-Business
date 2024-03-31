@@ -29,7 +29,7 @@ driver = Driver(uc=True, headless=True)
 
 url_file_path = "canada/7.ontario/toronto/url.txt"
 
-current_row = 1
+current_row = 44
 
 url_start_line = current_row  # Specify the line number where URLs start
 
