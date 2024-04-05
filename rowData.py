@@ -5,7 +5,7 @@ from openpyxl.styles import Alignment
 from openpyxl.utils import get_column_letter
 
 # Folder containing Excel files
-folder_path = 'canada/7.ontario/ottawa/'
+folder_path = 'canada/7.ontario/hamilton/'
 output_file = folder_path+'combined_excel.xlsx'
 
 # Columns to collect from each Excel file

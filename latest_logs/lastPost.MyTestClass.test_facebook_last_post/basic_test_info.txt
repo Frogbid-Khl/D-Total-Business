@@ -1,0 +1,15 @@
+lastPost.py::MyTestClass::test_facebook_last_post
+--------------------------------------------------------------------
+Last Page: https://www.facebook.com/mplexy/
+ Duration: 11.62s
+  Browser: Chrome 123.0.6312.86
+   Driver: chromedriver 123.0.6312.86
+Timestamp: 1712027211  (Unix Timestamp)
+     Date: Tuesday, 2 April 2024
+     Time: 9:06:51 AM  (Bangladesh Standard Time, UTC+06:00)
+--------------------------------------------------------------------
+Traceback:
+  File "C:\Users\monog\OneDrive\Documents\Desktop Application\D-Total-Business\lastPost.py", line 37, in test_facebook_last_post
+    self.quit()
+    ^^^^^^^^^
+Exception: 'MyTestClass' object has no attribute 'quit'
