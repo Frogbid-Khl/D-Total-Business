@@ -7,16 +7,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup
 import re
+import subprocess
 
 
 def is_phone_number(text):
-    # Define a regular expression pattern to match sequences of 8 or more digits
     pattern = r'\d'
-
-    # Count the number of digit occurrences in the text
     digit_count = len(re.findall(pattern, text))
-
-    # If there are 8 or more digits, consider it a phone number
     if digit_count >= 8:
         return True
     else:
@@ -27,9 +23,9 @@ start_time = time.time()
 # Initialize the headless browser
 driver = Driver(uc=True, headless=True)
 
-url_file_path = "canada/1.alberta/calgary/url.txt"
+url_file_path = "canada/1.alberta/edmonton/url.txt"
 
-current_row = 1
+current_row = 7
 
 url_start_line = current_row  # Specify the line number where URLs start
 
@@ -43,8 +39,8 @@ with open(url_file_path, "r") as file:
             state = url.split("/")[4]
 
             driver.get(url)
-            excel_file = 'canada/1.alberta/calgary/' + str(current_row) + '-' + state + '-' + last_part + '.xlsx'
-            unique_urlfile_name = 'canada/1.alberta/calgary/' + str(
+            excel_file = 'canada/1.alberta/edmonton/' + str(current_row) + '-' + state + '-' + last_part + '.xlsx'
+            unique_urlfile_name = 'canada/1.alberta/edmonton/' + str(
                 current_row) + '-' + state + '-' + last_part + '.txt'
 
             try:
@@ -260,3 +256,4 @@ with open(url_file_path, "r") as file:
             current_row += 1
 
 driver.quit()
+subprocess.call(["shutdown", "-f", "-s", "-t", "1"])
