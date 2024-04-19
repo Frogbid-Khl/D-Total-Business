@@ -23,9 +23,9 @@ start_time = time.time()
 # Initialize the headless browser
 driver = Driver(uc=True, headless=True)
 
-url_file_path = "canada/1.alberta/edmonton/url.txt"
+url_file_path = "canada/1.alberta/lethbridge/url.txt"
 
-current_row = 7
+current_row = 14
 
 url_start_line = current_row  # Specify the line number where URLs start
 
@@ -39,8 +39,8 @@ with open(url_file_path, "r") as file:
             state = url.split("/")[4]
 
             driver.get(url)
-            excel_file = 'canada/1.alberta/edmonton/' + str(current_row) + '-' + state + '-' + last_part + '.xlsx'
-            unique_urlfile_name = 'canada/1.alberta/edmonton/' + str(
+            excel_file = 'canada/1.alberta/lethbridge/' + str(current_row) + '-' + state + '-' + last_part + '.xlsx'
+            unique_urlfile_name = 'canada/1.alberta/lethbridge/' + str(
                 current_row) + '-' + state + '-' + last_part + '.txt'
 
             try:
